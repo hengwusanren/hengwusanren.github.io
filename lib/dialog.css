@@ -40,7 +40,7 @@
     position: absolute;
     visibility: hidden;
     zoom: 1;
-    overflow: visible;
+    overflow: auto;
 }
 
 .dialog-docker-p0 {
