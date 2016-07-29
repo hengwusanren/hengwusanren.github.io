@@ -66,7 +66,9 @@
         }
     </style>
 
-    <script type="text/javascript" src="./lib/dialog.js"></script>
+    <link href="./lib/mdialog.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="./lib/mdialog.js"></script>
 </head>
 
 <body>
@@ -86,6 +88,8 @@
         <button id="btn12">alert</button>
         <button id="btn13">middle-belt</button>
         <button id="btn14">middle-drop</button>
+        <button id="btn15">uncertain size</button>
+        <button id="btn16">uncertain size autoShow</button>
     </div>
     <div class="blocks">
         <div></div>
@@ -98,13 +102,14 @@
     <div id="dialogframe"></div>
 
     <script type="text/javascript">
-        //Dialog.Init(null, './lib/dialog.css');
-        Dialog.Init(document.getElementById('dialogframe'), './lib/dialog.css');
-
         document.getElementById('btn0').onclick = function() {
             // 全屏
+            var fsStr = '';
+            for(var i = 0; i < 200; i++) {
+                fsStr += 'This is a fullscreen dialog.';
+            }
             Dialog.Create({
-                content: 'This is a ' + this.innerText + ' dialog.',
+                content: fsStr + '<img style="position:absolute;left:0;bottom:0;" width="120" height="80" src="http://photos.tuchong.com/242557/f/2493506.jpg">',
                 autoShow: 1,
                 fullscreen: 1
             });
@@ -125,8 +130,10 @@
                 content: 'This is a ' + this.innerText + ' dialog.<div class="test" style="width:2048px;height:1024px;"></div>',
                 autoShow: 1,
                 position: 2,
+                slide: 'down',
                 width: '100%',
-                height: '300px'
+                height: '300px',
+                slide: 'down'
             });
         };
         document.getElementById('btn3').onclick = function() {
@@ -149,6 +156,7 @@
                 content: 'This is a ' + this.innerText + ' dialog.<div class="test" style="height:2048px"></div>',
                 autoShow: 1,
                 position: 4,
+                slide: 'right',
                 width: '50%',
                 height: '100%'
             });
@@ -172,6 +180,7 @@
                 content: 'This is a ' + this.innerText + ' dialog.',
                 autoShow: 1,
                 position: 6,
+                slide: 'left',
                 width: '400px',
                 height: '60%',
                 top: '40%' // 百分比相对于屏幕，dialog 中心到屏幕边缘距离
@@ -194,6 +203,9 @@
                     + '<input class="test" type="text" style="position:absolute;bottom:0;left:0;">',
                 autoShow: 1,
                 position: 8,
+                slide: 'up',
+                opacity: 0.2,
+                fade: true,
                 height: '50%'
             });
         };
@@ -249,8 +261,38 @@
                 position: 2,
                 width: '50%',
                 height: '50%',
-                top: 100
+                top: 100,
+                slide: 'down'
             });
+        };
+        var udlg1;
+        document.getElementById('btn15').onclick = function() {
+            // 不确定宽高
+            udlg1 = Dialog.Create({
+                content: 'This is a ' + this.innerText + ' dialog. <img width="600" height="400" src="http://photos.tuchong.com/242557/f/2493506.jpg">'
+                    + '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+                    + '<input class="test" type="text">',
+                autoShow: 1,
+                position: 5
+            });
+            //udlg.show();
+            udlg1.main.getElementsByTagName('input')[0].onfocus = function() {
+                console.log('udlg1 input focus');
+            };
+            udlg1.main.getElementsByTagName('input')[0].onblur = function() {
+                console.log('udlg1 input blur');
+            };
+        };
+        var udlg2;
+        udlg2 = Dialog.Create({
+            content: 'This is a ' + this.innerText + ' dialog. <img width="600" height="400" src="http://photos.tuchong.com/242557/f/2493506.jpg">'
+                + '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
+                + '<input class="test" type="text">',
+            position: 5
+        });
+        document.getElementById('btn16').onclick = function() {
+            // 不确定宽高
+            udlg2.show();
         };
     </script>
 </body>
