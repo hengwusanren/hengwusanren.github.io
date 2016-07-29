@@ -271,7 +271,7 @@
             udlg1 = Dialog.Create({
                 content: 'This is a ' + this.innerText + ' dialog. <img width="600" height="400" src="http://photos.tuchong.com/242557/f/2493506.jpg">'
                     + '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
-                    + '<input class="test" type="text">',
+                    + '<input class="test" type="text"><div style="height:20px;"></div>',
                 autoShow: 1,
                 position: 5
             });
@@ -287,7 +287,8 @@
         udlg2 = Dialog.Create({
             content: 'This is a ' + this.innerText + ' dialog. <img width="600" height="400" src="http://photos.tuchong.com/242557/f/2493506.jpg">'
                 + '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111'
-                + '<input class="test" type="text">',
+                + '<input class="test" type="text"><div style="height:20px;"></div>',
+            stay: 1,
             position: 5
         });
         document.getElementById('btn16').onclick = function() {
