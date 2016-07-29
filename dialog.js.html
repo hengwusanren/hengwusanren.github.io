@@ -276,12 +276,12 @@
                 position: 5
             });
             //udlg.show();
-            udlg1.main.getElementsByTagName('input')[0].onfocus = function() {
+            udlg1.main.getElementsByTagName('input')[0].addEventListener('focus', function() {
                 console.log('udlg1 input focus');
-            };
-            udlg1.main.getElementsByTagName('input')[0].onblur = function() {
+            }, false);
+            udlg1.main.getElementsByTagName('input')[0].addEventListener('blur', function() {
                 console.log('udlg1 input blur');
-            };
+            }, false);
         };
         var udlg2;
         udlg2 = Dialog.Create({
