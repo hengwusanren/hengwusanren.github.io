@@ -143,7 +143,7 @@
         var t;
         if(abs) t = d;
         else {
-            t = parseInt(el.getAttribute('transform')) + (d > 0 ? 1 : -1) * d * d / (2 * a);
+            t = parseFloat(el.getAttribute('transform')) + (d > 0 ? 1 : -1) * d * d / (2 * a);
         }
         if(t > 0) t = 0;
         if(t < -el.clientHeight) t = -el.clientHeight;
