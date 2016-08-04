@@ -87,7 +87,7 @@
             startX = touchobj.pageX;
             startY = touchobj.pageY;
 
-            // console.log('touchstart: ' + new Date().getTime());
+            console.log('touchstart: ' + new Date().getTime());
             thenX = nowX = startX;
             thenY = nowY = startY;
             startTime = lastLastMoveTime = lastMoveTime = new Date().getTime();
@@ -105,7 +105,7 @@
             if(newPos < -this.clientHeight) newPos = -this.clientHeight;
             translateUpdate(this, newPos, true);
 
-            // console.log('touchmoving: ' + new Date().getTime());
+            console.log('touchmoving: ' + new Date().getTime());
             thenX = nowX;
             nowX = touchobj.pageX;
             thenY = nowY;
@@ -129,7 +129,7 @@
                 }
             }
 
-            // console.log('touchend: ' + new Date().getTime());
+            console.log('touchend: ' + new Date().getTime());
             endTime = new Date().getTime();
 
             // setTimeout(function() {handleswipe(this, swipedir, elapsedTime, distX, distY, nowX - thenX, nowY - thenY, lastMoveTime - lastLastMoveTime, endTime - lastMoveTime, thresholdTime, acceleration);}.bind(this), 0);
@@ -217,7 +217,7 @@
             t = '-webkit-' + t + '-moz-' + t + '-o-' + t + t;
             scrollStyle.innerHTML = '.scroll-transition { ' + t + ' }';
             document.getElementsByTagName('head')[0].appendChild(scrollStyle);
-            elem.classList.add('scroll-transition');
+            elem.className = 'scroll-transition';
             if(pauseTime < thresholdTime) translateUpdate(elem, initialSpeed, false, acceleration);
         });
     };
