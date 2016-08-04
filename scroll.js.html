@@ -87,7 +87,7 @@
             startX = touchobj.pageX;
             startY = touchobj.pageY;
 
-            console.log('touchstart: ' + new Date().getTime());
+            // console.log('touchstart: ' + new Date().getTime());
             thenX = nowX = startX;
             thenY = nowY = startY;
             startTime = lastLastMoveTime = lastMoveTime = new Date().getTime();
@@ -129,7 +129,7 @@
                 }
             }
 
-            console.log('touchend: ' + new Date().getTime());
+            // console.log('touchend: ' + new Date().getTime());
             endTime = new Date().getTime();
 
             // setTimeout(function() {handleswipe(this, swipedir, elapsedTime, distX, distY, nowX - thenX, nowY - thenY, lastMoveTime - lastLastMoveTime, endTime - lastMoveTime, thresholdTime, acceleration);}.bind(this), 0);
@@ -189,12 +189,12 @@
         addScrollContentForTest();
         var el = document.getElementById('div1');
         swipeDetect(el, function(elem, swipedir, elapsedTime, distX, distY, lastDistX, lastDistY, lastDistTime, pauseTime, thresholdTime, acceleration) {
-            console.log('Dir: ' + swipedir);
+            // console.log('Dir: ' + swipedir);
             // console.log('DistX: ' + distX);
-            console.log('Dist: ' + distY + ', ' + elapsedTime);
+            // console.log('Dist: ' + distY + ', ' + elapsedTime);
             // console.log('LastDistX: ' + lastDistX);
-            console.log('LastDist: ' + lastDistY + ', ' + lastDistTime);
-            console.log('Pause: ' + pauseTime);
+            // console.log('LastDist: ' + lastDistY + ', ' + lastDistTime);
+            // console.log('Pause: ' + pauseTime);
             switch (swipedir) {
                 case 'up':
                     //console.log('Speed: ' + (-distY / elapsedTime));
@@ -206,13 +206,13 @@
             }
 
             var initialSpeed = lastDistY * 1000 / lastDistTime;
-            console.log('InitialSpeed: ' + initialSpeed + ' px/s');
+            // console.log('InitialSpeed: ' + initialSpeed + ' px/s');
 
             if(scrollStyle) document.getElementsByTagName('head')[0].removeChild(scrollStyle);
             scrollStyle = document.createElement('style');
             scrollStyle.type = 'text/css';
             var moveDuration = Math.abs(initialSpeed) / acceleration;
-            console.log('move duration: ' + moveDuration);
+            // console.log('move duration: ' + moveDuration);
             var t = 'transition:  all ' + moveDuration + 's cubic-bezier(.33, .67, .67, 1);';
             t = '-webkit-' + t + '-moz-' + t + '-o-' + t + t;
             scrollStyle.innerHTML = '.scroll-transition { ' + t + ' }';
