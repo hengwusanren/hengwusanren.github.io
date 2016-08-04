@@ -87,10 +87,10 @@
             startX = touchobj.pageX;
             startY = touchobj.pageY;
 
-            console.log('touchstart: ' + new Date().getTime());
             thenX = nowX = startX;
             thenY = nowY = startY;
-            startTime = lastLastMoveTime = lastMoveTime = new Date().getTime();
+            startTime = lastLastMoveTime = lastMoveTime = Date.now();
+            console.log('touchstart: ' + startTime);
 
             // startTop = parseFloat(this.getAttribute('transform'));
             startTop = parseFloat(scrollPosition);
@@ -106,13 +106,13 @@
             if(newPos < -this.clientHeight) newPos = -this.clientHeight;
             translateUpdate(this, newPos, true);
 
-            // console.log('touchmoving: ' + new Date().getTime());
+            // console.log('touchmoving: ' + Date.now());
             thenX = nowX;
             nowX = touchobj.pageX;
             thenY = nowY;
             nowY = touchobj.pageY;
             lastLastMoveTime = lastMoveTime;
-            lastMoveTime = new Date().getTime();
+            lastMoveTime = Date.now();
 
             e.preventDefault(); // prevent scrolling when inside DIV
         }, false);
@@ -121,7 +121,7 @@
             var touchobj = e.changedTouches[0];
             distX = touchobj.pageX - startX; // get horizontal dist traveled by finger while in contact with surface
             distY = touchobj.pageY - startY; // get vertical dist traveled by finger while in contact with surface
-            elapsedTime = new Date().getTime() - startTime; // get time elapsed
+            elapsedTime = Date.now() - startTime; // get time elapsed
             if (elapsedTime <= allowedTime) { // first condition for awipe met
                 if (Math.abs(distX) >= threshold && Math.abs(distY) <= restraint) { // 2nd condition for horizontal swipe met
                     swipedir = (distX < 0) ? 'left' : 'right'; // if dist traveled is negative, it indicates left swipe
@@ -130,8 +130,8 @@
                 }
             }
 
-            console.log('touchend: ' + new Date().getTime());
-            endTime = new Date().getTime();
+            endTime = Date.now();
+            console.log('touchend: ' + endTime);
 
             // setTimeout(function() {handleswipe(this, swipedir, elapsedTime, distX, distY, nowX - thenX, nowY - thenY, lastMoveTime - lastLastMoveTime, endTime - lastMoveTime, thresholdTime, acceleration);}.bind(this), 0);
             handleswipe(this, swipedir, elapsedTime, distX, distY, nowX - thenX, nowY - thenY, lastMoveTime - lastLastMoveTime, endTime - lastMoveTime, thresholdTime, acceleration);
