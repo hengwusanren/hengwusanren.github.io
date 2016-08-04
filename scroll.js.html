@@ -206,13 +206,13 @@
             }
 
             var initialSpeed = lastDistY * 1000 / lastDistTime;
-            // console.log('InitialSpeed: ' + initialSpeed + ' px/s');
+            console.log('InitialSpeed: ' + initialSpeed + ' px/s');
 
             if(scrollStyle) document.getElementsByTagName('head')[0].removeChild(scrollStyle);
             scrollStyle = document.createElement('style');
             scrollStyle.type = 'text/css';
             var moveDuration = Math.abs(initialSpeed) / acceleration;
-            // console.log('move duration: ' + moveDuration);
+            console.log('ComputedDuration: ' + moveDuration);
             var t = 'transition:  all ' + moveDuration + 's cubic-bezier(.33, .67, .67, 1);';
             t = '-webkit-' + t + '-moz-' + t + '-o-' + t + t;
             scrollStyle.innerHTML = '.scroll-transition { ' + t + ' }';
