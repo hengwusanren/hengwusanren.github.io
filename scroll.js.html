@@ -32,21 +32,10 @@
         font-size: 32px;
         border: 1px solid #666;
     }
-
-    .scroll-transition {
-        -webkit-transition:  all 2s cubic-bezier(.33, .67, .67, 1);
-        -moz-transition:  all 2s cubic-bezier(.33, .67, .67, 1);
-        -o-transition:  all 2s cubic-bezier(.33, .67, .67, 1);
-        transition:  all 2s cubic-bezier(.33, .67, .67, 1);
-    }
-    .scroll-transform {
-        -webkit-transform:  translate(0, -1000px);
-        -moz-transform:  translate(0, -1000px);
-        -o-transform:  translate(0, -1000px);
-        transform:  translate(0, -1000px);
-    }
     </style>
     <script>
+    var choice = 1; // 0: transform, 1: top
+
     var addScrollContentForTest = function() {
         var div1 = document.getElementById('div1');
         for (var i = 0; i < 1000; i++) {
@@ -106,7 +95,8 @@
             if(newPos < -this.clientHeight) newPos = -this.clientHeight;
             translateUpdate(this, newPos, true);
 
-            // console.log('touchmoving: ' + Date.now());
+            // console.log('touchmoving');
+
             thenX = nowX;
             nowX = touchobj.pageX;
             thenY = nowY;
@@ -151,41 +141,45 @@
         if(t < -el.clientHeight) t = -el.clientHeight;
         // el.setAttribute('transform', t);
         scrollPosition = t;
-        t = 'translate(0,' + t + 'px)';
-        el.style.transform = t;
-        el.style.WebkitTransform = t;
-        // el.style.MozTransform = t;
-        // el.style.OTransform = t;
+
+        if(choice == 0) {
+            t = 'translate(0,' + t + 'px)';
+            el.style.transform = t;
+            el.style.WebkitTransform = t;
+            // el.style.MozTransform = t;
+            // el.style.OTransform = t;
+        } else if(choice == 1) {
+            el.style.top = t + 'px';
+        }
     };
 
     var scrollPosition = 0;
 
     var translateStop = function(el) {
-        var computedStyle = window.getComputedStyle(el),
-        t = computedStyle.getPropertyValue('transform');
-        el.style.transform = t;
-        el.style.WebkitTransform = t;
-        // el.style.MozTransform = t;
-        // el.style.OTransform = t;
-        el.className = '';
+        var computedStyle = window.getComputedStyle(el);
 
-        if(t != 'none') {
-            t = t.substring(t.lastIndexOf(', ') + 2, t.length - (t.endsWith('px)') ? 3 : 1));
-            // el.setAttribute('transform', t);
-            scrollPosition = t;
-        }
-    };
+        if(choice == 0) {
+            t = computedStyle.getPropertyValue('transform');
+            el.style.transform = t;
+            el.style.WebkitTransform = t;
+            // el.style.MozTransform = t;
+            // el.style.OTransform = t;
 
-    var toggleClass = function(el, className, add) {
-        var s = ' ' + el.className + ' ';
-        if(add) {
-            if(s.indexOf(' ' + className + ' ') >= 0) return;
-            el.className += ' ' + className;
-            return;
+            if(t != 'none') {
+                t = t.substring(t.lastIndexOf(', ') + 2, t.length - (t.endsWith('px)') ? 3 : 1));
+            }
+        } else if(choice == 1) {
+            t = computedStyle.getPropertyValue('top');
+            el.style.top = t;
+
+            if(t != 'none') {
+                t = t.substring(0, t.length - (t.endsWith('px') ? 2 : 0));
+            }
         }
-        if(s.indexOf(' ' + className + ' ') < 0) return;
-        el.className = s.replace(' ' + className + ' ', ' ');
-        return;
+
+        // el.className = '';
+        el.classList.remove('scroll-transition');
+        scrollPosition = t;
     };
 
     var scrollStyle = null;
@@ -222,7 +216,7 @@
             t = '-webkit-' + t + '-moz-' + t + '-o-' + t + t;
             scrollStyle.innerHTML = '.scroll-transition { ' + t + ' }';
             document.getElementsByTagName('head')[0].appendChild(scrollStyle);
-            elem.className = 'scroll-transition';
+            elem.classList.add('scroll-transition');
             if(pauseTime < thresholdTime) translateUpdate(elem, initialSpeed, false, acceleration);
         });
     };
@@ -231,7 +225,7 @@
 
 <body>
     <div class="scroll-wrap">
-        <div id="div1" transform="0"></div>
+        <div id="div1" class="scroll-body" transform="0" top="0"></div>
     </div>
 </body>
 
