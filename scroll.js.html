@@ -20,12 +20,6 @@
         overflow: hidden;
     }
 
-    .scroll-body {
-        position: relative;
-        width: 100%;
-        border: 1px solid #333;
-    }
-
     .test-div {
         height: 256px;
         line-height: 64px;
@@ -177,8 +171,8 @@
             }
         }
 
-        // el.className = '';
-        el.classList.remove('scroll-transition');
+        el.className = '';
+        // el.classList.remove('scroll-transition');
         scrollPosition = t;
     };
 
@@ -216,7 +210,8 @@
             t = '-webkit-' + t + '-moz-' + t + '-o-' + t + t;
             scrollStyle.innerHTML = '.scroll-transition { ' + t + ' }';
             document.getElementsByTagName('head')[0].appendChild(scrollStyle);
-            elem.classList.add('scroll-transition');
+            // elem.classList.add('scroll-transition');
+            elem.className = 'scroll-transition';
             if(pauseTime < thresholdTime) translateUpdate(elem, initialSpeed, false, acceleration);
         });
     };
@@ -225,7 +220,7 @@
 
 <body>
     <div class="scroll-wrap">
-        <div id="div1" class="scroll-body" transform="0" top="0"></div>
+        <div id="div1" style="position:relative"></div>
     </div>
 </body>
 
