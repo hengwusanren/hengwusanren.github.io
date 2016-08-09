@@ -84,7 +84,7 @@
             restraint = 100, // maximum distance allowed at the same time in perpendicular direction
             allowedTime = 300, // maximum time allowed to travel that distance
             thresholdTime = 100,
-            acceleration = 20000,
+            acceleration = 5000,
             elapsedTime,
             startTime,
             handleswipe = callback || function() {};
@@ -198,6 +198,7 @@
                 t = t.substring(0, t.length - (t.endsWith('px') ? 2 : 0));
             }
         }
+        if(t == 'none') t = 0;
 
         el.className = '';
         // el.classList.remove('scroll-transition');
