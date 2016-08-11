@@ -165,7 +165,7 @@
         scrollPosition = t;
 
         if(choice == 0) {
-            t = 'translate(0,' + t + 'px)';
+            t = 'translate3d(0,' + t + 'px,0)';
             el.style.transform = t;
             el.style.WebkitTransform = t;
             // el.style.MozTransform = t;
@@ -182,6 +182,7 @@
 
         if(choice == 0) {
             t = computedStyle.getPropertyValue('transform');
+            console.log(t);
             el.style.transform = t;
             el.style.WebkitTransform = t;
             // el.style.MozTransform = t;
