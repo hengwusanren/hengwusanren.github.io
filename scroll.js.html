@@ -115,7 +115,8 @@
             var newPos = startTop + touchobj.pageY - startY;
             if(newPos > 0) newPos = 0;
             if(newPos < -this.clientHeight) newPos = -this.clientHeight;
-            translateUpdate(this, newPos, true);
+
+            scrollPosition = _setTranslate(this, newPos, choice);
 
             // console.log('touchmoving');
 
@@ -152,27 +153,42 @@
         }, false);
     };
 
-    var translateUpdate = function(el, d, abs, a) {
-        var t;
-        if(abs) t = d;
-        else {
-            // t = parseFloat(el.getAttribute('transform')) + (d > 0 ? 1 : -1) * d * d / (2 * a);
-            t = parseFloat(scrollPosition) + (d > 0 ? 1 : -1) * d * d / (2 * a);
-        }
+    var _setTranslate = function (el, d, chc) {
+        var t = d || 0;
         if(t > 0) t = 0;
         if(t < -el.clientHeight) t = -el.clientHeight;
-        // el.setAttribute('transform', t);
-        scrollPosition = t;
 
-        if(choice == 0) {
+        var tt = t;
+
+        if(chc == 0) {
             t = 'translate3d(0,' + t + 'px,0)';
             el.style.transform = t;
             el.style.WebkitTransform = t;
-            // el.style.MozTransform = t;
-            // el.style.OTransform = t;
-        } else if(choice == 1) {
+        } else if(chc == 1) {
             el.style.top = t + 'px';
         }
+
+        return tt;
+    };
+
+    var _calTranslate = function (s0, v, a) {
+        return parseFloat(s0) + (v > 0 ? 1 : -1) * v * v / (2 * a);
+    };
+
+    var updateTranslate = function(el, d, a) {
+        var t = _calTranslate(scrollPosition, d, a);
+        scrollPosition = _setTranslate(el, t, choice);
+    };
+
+    var updateTransition = function(v, a, b0, b1) {
+        var time = Math.abs(v) / a;
+        if(scrollStyle) document.getElementsByTagName('head')[0].removeChild(scrollStyle);
+        scrollStyle = document.createElement('style');
+        scrollStyle.type = 'text/css';
+        var t = 'transition:  all ' + time + 's cubic-bezier(.33, .67, .67, 1);';
+        t = '-webkit-' + t + t;
+        scrollStyle.innerHTML = '.scroll-transition { ' + t + ' }';
+        document.getElementsByTagName('head')[0].appendChild(scrollStyle);
     };
 
     var scrollPosition = 0;
@@ -185,8 +201,6 @@
             console.log(t);
             el.style.transform = t;
             el.style.WebkitTransform = t;
-            // el.style.MozTransform = t;
-            // el.style.OTransform = t;
 
             if(t != 'none') {
                 t = t.substring(t.lastIndexOf(', ') + 2, t.length - (t.endsWith('px)') ? 3 : 1));
@@ -202,7 +216,7 @@
         if(t == 'none') t = 0;
 
         el.className = '';
-        // el.classList.remove('scroll-transition');
+
         scrollPosition = t;
     };
 
@@ -218,6 +232,7 @@
             // console.log('LastDistX: ' + lastDistX);
             console.log('LastDist: ' + lastDistY + ', ' + lastDistTime);
             console.log('Pause: ' + pauseTime);
+            
             switch (swipedir) {
                 case 'up':
                     //console.log('Speed: ' + (-distY / elapsedTime));
@@ -231,18 +246,12 @@
             var initialSpeed = lastDistY * 1000 / lastDistTime;
             console.log('InitialSpeed: ' + initialSpeed + ' px/s');
 
-            if(scrollStyle) document.getElementsByTagName('head')[0].removeChild(scrollStyle);
-            scrollStyle = document.createElement('style');
-            scrollStyle.type = 'text/css';
-            var moveDuration = Math.abs(initialSpeed) / acceleration;
-            console.log('ComputedDuration: ' + moveDuration);
-            var t = 'transition:  all ' + moveDuration + 's cubic-bezier(.33, .67, .67, 1);';
-            t = '-webkit-' + t + '-moz-' + t + '-o-' + t + t;
-            scrollStyle.innerHTML = '.scroll-transition { ' + t + ' }';
-            document.getElementsByTagName('head')[0].appendChild(scrollStyle);
-            // elem.classList.add('scroll-transition');
+            updateTransition(initialSpeed, acceleration);
+
             elem.className = 'scroll-transition';
-            if(pauseTime < thresholdTime) translateUpdate(elem, initialSpeed, false, acceleration);
+            if(pauseTime < thresholdTime) {
+                updateTranslate(elem, initialSpeed, acceleration);
+            }
         });
     };
     </script>
