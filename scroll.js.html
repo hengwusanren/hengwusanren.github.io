@@ -70,14 +70,14 @@
     window.onload = function() {
         test_addScrollContent(document.getElementById('div1'));
         new ScrollControl(document.getElementById('div1'), function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
-            console.log({
-                dist: totalDistX + ',' + totalDistY,
-                time: elapsedTime,
-                dists: distYIntervals,
-                times: timeIntervals,
-                pos: scrollPosition,
-                bdr: transBoundary
-            });
+            // console.log({
+            //     dist: totalDistX + ',' + totalDistY,
+            //     time: elapsedTime,
+            //     dists: distYIntervals,
+            //     times: timeIntervals,
+            //     pos: scrollPosition,
+            //     bdr: transBoundary
+            // });
         });
 
         test_addScrollContent(document.getElementById('div2'));
