@@ -69,12 +69,19 @@
 
     window.onload = function() {
         test_addScrollContent(document.getElementById('div1'));
-        scrollControl(document.getElementById('div1'), function(elem, scrollDir, elapsedTime, distX, distY, lastDistX, lastDistY, lastDistTime, pauseTime, thresholdTime, acceleration) {
-            //TODO
+        new ScrollControl(document.getElementById('div1'), function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
+            console.log({
+                dist: totalDistX + ',' + totalDistY,
+                time: elapsedTime,
+                dists: distYIntervals,
+                times: timeIntervals,
+                pos: scrollPosition,
+                bdr: transBoundary
+            });
         });
 
         test_addScrollContent(document.getElementById('div2'));
-        scrollControl(document.getElementById('div2'), function(elem, scrollDir, elapsedTime, distX, distY, lastDistX, lastDistY, lastDistTime, pauseTime, thresholdTime, acceleration) {
+        new ScrollControl(document.getElementById('div2'), function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
             //TODO
         });
     };
