@@ -41,11 +41,11 @@ requirejs(['mock', 'scroll'], function(Mock, Scroll) {
 
     test_addScrollContent(document.getElementById('div2'));
     new Scroll.control(document.getElementById('div2'), function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
-        console.log(scrollPosition);
-        if(scrollPosition == transBoundary) {
-            console.log('Get to the bottom!');
-        } else if(scrollPosition == 0) {
-            console.log('Get to the top!');
-        }
+        // console.log(scrollPosition);
+        // if(scrollPosition == transBoundary) {
+        //     console.log('Get to the bottom!');
+        // } else if(scrollPosition == 0) {
+        //     console.log('Get to the top!');
+        // }
     });
 });
