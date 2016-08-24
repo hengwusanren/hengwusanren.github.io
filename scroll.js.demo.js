@@ -6,7 +6,7 @@ requirejs.config({
 });
 
 requirejs(['mock', 'scroll'], function(Mock, Scroll) {
-    var test_listLength = 100;
+    var test_listLength = 1000;
     var test_data = Mock.mock({
         'list|1-100': [{
             'id|+1': 1
@@ -24,7 +24,7 @@ requirejs(['mock', 'scroll'], function(Mock, Scroll) {
         }
     };
 
-    // setInterval(function() {
+    // window.setInterval(function() {
         test_addScrollContent(document.getElementById('div1'));
     // }, 2000);
 
