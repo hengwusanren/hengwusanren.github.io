@@ -8,6 +8,7 @@ requirejs.config({
 
 requirejs(['scroll', 'hide'], function(Scroll, Hide) {
     var test_listLength = 1000;
+    var test_choice = window.location.hash;
     var test_addScrollContent = function(div) {
         for (var i = 0; i < test_listLength; i++) {
             var child = document.createElement('div');
@@ -31,7 +32,7 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
         //     pos: scrollPosition,
         //     bdr: transBoundary
         // });
-        Hide.update(scrollPosition);
+        if(test_choice === '#1') Hide.update(scrollPosition);
     });
-    Hide.init(test_targetDom);
+    if(test_choice === '#1') Hide.init(test_targetDom);
 });
