@@ -7,8 +7,15 @@ requirejs.config({
 });
 
 requirejs(['scroll', 'hide'], function(Scroll, Hide) {
-    var test_listLength = 1000;
-    var test_choice = window.location.hash;
+    var getUrlParameter = function (name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(window.location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+    };
+    var getUrlHash = function () {
+        var url = window.location.href;
+        if (url.indexOf('#') < 0) return '';
+        return url.substring(url.indexOf('#') + 1);
+    };
+    var test_listLength = parseInt(getUrlParameter('size') || '1000', 10);
     var test_addScrollContent = function(div) {
         for (var i = 0; i < test_listLength; i++) {
             var child = document.createElement('div');
@@ -18,6 +25,9 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
         }
     };
     var test_targetDom = document.getElementById('div1');
+    var test_choice = getUrlParameter('hide'),
+        test_offset = parseInt(getUrlParameter('offset'), 10),
+        test_range = parseInt(getUrlParameter('range'), 10);
 
     // window.setInterval(function() {
         test_addScrollContent(test_targetDom);
@@ -32,7 +42,10 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
         //     pos: scrollPosition,
         //     bdr: transBoundary
         // });
-        if(test_choice === '#1') Hide.update(scrollPosition);
+        if(test_choice === 'true') Hide.update(scrollPosition);
     });
-    if(test_choice === '#1') Hide.init(test_targetDom);
+    if(test_choice === 'true') Hide.init(test_targetDom, {
+        offset: test_offset,
+        range: test_range
+    });
 });
