@@ -1,20 +1,13 @@
 requirejs.config({
     paths: {
         mock: 'http://mockjs.com/dist/mock',
-        scroll: './lib/scroll'
+        scroll: './lib/scroll',
+        html2canvas: './lib/html2canvas'
     }
 });
 
-requirejs(['mock', 'scroll'], function(Mock, Scroll) {
+requirejs(['scroll'], function(Scroll) {
     var test_listLength = 1000;
-    var test_data = Mock.mock({
-        'list|1-100': [{
-            'id|+1': 1
-        }]
-    });
-
-    console.log(test_data);
-
     var test_addScrollContent = function(div) {
         for (var i = 0; i < test_listLength; i++) {
             var child = document.createElement('div');
@@ -23,12 +16,25 @@ requirejs(['mock', 'scroll'], function(Mock, Scroll) {
             div.appendChild(child);
         }
     };
+    var test_zumbieChildren = function(div, offset, number) {
+        var blankDiv = document.createElement('div');
+        var height = 0;
+        blankDiv.setAttribute('style', 'width:100%;height:0;padding:0;border:0;margin:0;');
+        div.insertBefore(blankDiv, div.childNodes[offset]);
+        for (var i = 1; i <= number; i++) {
+            var curNode = div.childNodes[offset + i];
+            height += curNode.clientHeight;
+            blankDiv.style.height = height + 'px';
+            curNode.style.display = 'none';
+        }
+    };
+    var test_targetDom = document.getElementById('div1');
 
     // window.setInterval(function() {
-        test_addScrollContent(document.getElementById('div1'));
+        test_addScrollContent(test_targetDom);
     // }, 2000);
 
-    new Scroll.control(document.getElementById('div1'), function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
+    new Scroll.control(test_targetDom, function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
         // console.log({
         //     dist: totalDistX + ',' + totalDistY,
         //     time: elapsedTime,
@@ -39,13 +45,5 @@ requirejs(['mock', 'scroll'], function(Mock, Scroll) {
         // });
     });
 
-    // test_addScrollContent(document.getElementById('div2'));
-    // new Scroll.control(document.getElementById('div2'), function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
-        // console.log(scrollPosition);
-        // if(scrollPosition == transBoundary) {
-        //     console.log('Get to the bottom!');
-        // } else if(scrollPosition == 0) {
-        //     console.log('Get to the top!');
-        // }
-    // });
+    test_zumbieChildren(test_targetDom, 0, 10);
 });
