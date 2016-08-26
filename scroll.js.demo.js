@@ -20,7 +20,7 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
         for (var i = 0; i < test_listLength; i++) {
             var child = document.createElement('div');
             child.className = 'test-div';
-            child.innerHTML = div.childNodes.length + 1;
+            child.innerHTML = i + 1;
             div.appendChild(child);
         }
     };
