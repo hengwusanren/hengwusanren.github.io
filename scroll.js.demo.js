@@ -42,7 +42,7 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
         //     pos: scrollPosition,
         //     bdr: transBoundary
         // });
-        if(test_choice === 'true') Hide.update(scrollPosition);
+        if(test_choice === 'true') Hide.update(scrollPosition, scrollDir);
     });
     if(test_choice === 'true') Hide.init(test_targetDom, {
         offset: test_offset,
