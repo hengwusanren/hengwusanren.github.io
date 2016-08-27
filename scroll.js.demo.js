@@ -1,20 +1,21 @@
+var getUrlParameter = function (name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(window.location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+};
+var getUrlHash = function () {
+    var url = window.location.href;
+    if (url.indexOf('#') < 0) return '';
+    return url.substring(url.indexOf('#') + 1);
+};
+
 requirejs.config({
     paths: {
         mock: 'http://mockjs.com/dist/mock',
         scroll: './lib/scroll',
-        hide: './lib/displayNone'
+        hide: './lib/' + (!getUrlHash() ? 'displayNone' : 'visibilityHidden')
     }
 });
 
 requirejs(['scroll', 'hide'], function(Scroll, Hide) {
-    var getUrlParameter = function (name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(window.location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
-    };
-    var getUrlHash = function () {
-        var url = window.location.href;
-        if (url.indexOf('#') < 0) return '';
-        return url.substring(url.indexOf('#') + 1);
-    };
     var test_listLength = parseInt(getUrlParameter('size') || '1000', 10);
     var test_addScrollContent = function(div) {
         for (var i = 0; i < test_listLength; i++) {
@@ -28,6 +29,14 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
     var test_choice = getUrlParameter('hide'),
         test_offset = parseInt(getUrlParameter('offset'), 10),
         test_range = parseInt(getUrlParameter('range'), 10);
+
+    if(!test_choice) {
+        document.title = '模拟滚动';
+    } else if(!getUrlHash()) {
+        document.title = '模拟滚动-display:none';
+    } else {
+        document.title = '模拟滚动-visibility:hidden';
+    }
 
     // window.setInterval(function() {
         test_addScrollContent(test_targetDom);

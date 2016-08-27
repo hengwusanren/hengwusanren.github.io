@@ -39,8 +39,8 @@
         border: 0;
     }
     .test-div {
-        height: 48px;
-        line-height: 48px;
+        height: 128px;
+        line-height: 128px;
         font-size: 32px;
         text-align: center;
         border: 1px solid #666;
@@ -51,6 +51,7 @@
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(window.location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
     };
     window.onload = function() {
+        document.title = '原生滚动';
         var div = document.getElementById('div1');
         for (var i = 0, size = parseInt(getUrlParameter('size')); i < size; i++) {
             var child = document.createElement('div');
