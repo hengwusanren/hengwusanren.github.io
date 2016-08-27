@@ -2,7 +2,7 @@ requirejs.config({
     paths: {
         mock: 'http://mockjs.com/dist/mock',
         scroll: './lib/scroll',
-        hide: './lib/hide'
+        hide: './lib/displayNone'
     }
 });
 
@@ -33,16 +33,12 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
         test_addScrollContent(test_targetDom);
     // }, 2000);
 
-    new Scroll.control(test_targetDom, function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, scrollPosition, transBoundary) {
+    new Scroll.control(test_targetDom, function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, endPosition, startPosition, transBoundary) {
         // console.log({
-        //     dist: totalDistX + ',' + totalDistY,
-        //     time: elapsedTime,
-        //     dists: distYIntervals,
-        //     times: timeIntervals,
-        //     pos: scrollPosition,
-        //     bdr: transBoundary
+        //     scrollBegin: -startPosition,
+        //     scrollEnd: -endPosition
         // });
-        if(test_choice === 'true') Hide.update(scrollPosition, scrollDir);
+        if(test_choice === 'true') Hide.update(-endPosition, scrollDir);
     });
     if(test_choice === 'true') Hide.init(test_targetDom, {
         offset: test_offset,
