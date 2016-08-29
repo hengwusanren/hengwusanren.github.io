@@ -9,15 +9,20 @@ var getUrlHash = function () {
 
 requirejs.config({
     paths: {
-        mock: 'http://mockjs.com/dist/mock',
         scroll: './lib/scroll',
-        hide: './lib/' + (!getUrlHash() ? 'displayNone' : 'visibilityHidden')
+        hide: './lib/' + (!getUrlHash() ? 'displayNone' : 'visibilityHidden'),
+        domini: './lib/domini',
+        domock: './lib/domock'
     }
 });
 
-requirejs(['scroll', 'hide'], function(Scroll, Hide) {
+requirejs(['scroll', 'hide', 'domini', 'domock'], function(Scroll, Hide, Domini, Domock) {
     var test_listLength = parseInt(getUrlParameter('size') || '1000', 10);
-    var test_addScrollContent = function(div) {
+    var test_targetDom = document.getElementById('div1');
+    var test_choice = getUrlParameter('hide'),
+        test_offset = parseInt(getUrlParameter('offset'), 10),
+        test_range = parseInt(getUrlParameter('range'), 10);
+    var test_generateContent1 = function(div) {
         for (var i = 0; i < test_listLength; i++) {
             var child = document.createElement('div');
             child.className = 'test-div';
@@ -25,10 +30,9 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
             div.appendChild(child);
         }
     };
-    var test_targetDom = document.getElementById('div1');
-    var test_choice = getUrlParameter('hide'),
-        test_offset = parseInt(getUrlParameter('offset'), 10),
-        test_range = parseInt(getUrlParameter('range'), 10);
+    var test_generateContent2 = function(div) {
+        Domock(div, [test_listLength, 4, 4, 4]);
+    };
 
     if(!test_choice) {
         document.title = '模拟滚动';
@@ -38,16 +42,10 @@ requirejs(['scroll', 'hide'], function(Scroll, Hide) {
         document.title = '模拟滚动-visibility:hidden';
     }
 
-    // window.setInterval(function() {
-        test_addScrollContent(test_targetDom);
-    // }, 2000);
+    test_generateContent2(test_targetDom);
 
-    new Scroll.control(test_targetDom, function(elem, scrollDir, totalDistX, totalDistY, elapsedTime, distXIntervals, distYIntervals, timeIntervals, endPosition, startPosition, transBoundary) {
-        // console.log({
-        //     scrollBegin: -startPosition,
-        //     scrollEnd: -endPosition
-        // });
-        if(test_choice === 'true') Hide.update(-endPosition, scrollDir);
+    new Scroll.control(test_targetDom, function(elem, record) {
+        if(test_choice === 'true') Hide.update(-record.endPosition, record.scrollDir);
     });
     if(test_choice === 'true') Hide.init(test_targetDom, {
         offset: test_offset,
