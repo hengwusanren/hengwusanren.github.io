@@ -21,6 +21,7 @@ requirejs(['scroll', 'hide', 'domini', 'domock'], function(Scroll, Hide, Domini,
     var test_targetDom = document.getElementById('div1');
     var test_native = getUrlParameter('native'),
         test_choice = getUrlParameter('hide'),
+        test_requestAnimationFrame = getUrlParameter('raf'),
         test_offset = parseInt(getUrlParameter('offset'), 10),
         test_range = parseInt(getUrlParameter('range'), 10);
     var test_generateContent1 = function(div, levels) {
@@ -46,13 +47,21 @@ requirejs(['scroll', 'hide', 'domini', 'domock'], function(Scroll, Hide, Domini,
             document.title = '模拟滚动-visibility:hidden';
         }
     }
+    if(test_requestAnimationFrame) {
+        document.title += '-raf';
+    }
 
     test_generateContent2(test_targetDom, [test_listLength, 4, 4, 4]);
 
     if(test_native) return;
 
-    new Scroll.control(test_targetDom, function(elem, record) {
-        if(test_choice === 'true') Hide.update(-record.endPosition, record.scrollDir);
+    new Scroll.control(test_targetDom, {
+        acceleration: 5000,
+        raf: !!test_requestAnimationFrame,
+        scrollBarMode: 1,
+        callback: function(elem, record) {
+            if(test_choice === 'true') Hide.update(-record.endPosition, record.scrollDir);
+        }
     });
     if(test_choice === 'true') Hide.init(test_targetDom, {
         offset: test_offset,
