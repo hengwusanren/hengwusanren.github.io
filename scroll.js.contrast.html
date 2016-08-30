@@ -39,28 +39,14 @@
         border: 0;
     }
     .test-div {
-        height: 128px;
+        /*height: 128px;*/
         line-height: 128px;
         font-size: 32px;
         text-align: center;
         border: 1px solid #666;
     }
     </style>
-    <script>
-    var getUrlParameter = function (name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(window.location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
-    };
-    window.onload = function() {
-        document.title = '原生滚动';
-        var div = document.getElementById('div1');
-        for (var i = 0, size = parseInt(getUrlParameter('size')); i < size; i++) {
-            var child = document.createElement('div');
-            child.className = 'test-div';
-            child.innerHTML = i + 1;
-            div.appendChild(child);
-        }
-    };
-    </script>
+    <script data-main="./scroll.js.demo.js" src="./lib/require.js"></script>
 </head>
 <body>
     <div id="div1" style="position:relative;left:0;font-size:0;"></div>
