@@ -11,6 +11,7 @@ requirejs.config({
     paths: {
         scroll: './lib/scroll',
         hide: './lib/' + (!getUrlHash() ? 'displayNone' : 'visibilityHidden'),
+        renode: './lib/renode',
         domini: './lib/domini',
         domock: './lib/domock'
     }
@@ -21,9 +22,7 @@ requirejs(['scroll', 'hide', 'domini', 'domock'], function(Scroll, Hide, Domini,
     var test_targetDom = document.getElementById('div1');
     var test_native = getUrlParameter('native'),
         test_choice = getUrlParameter('hide'),
-        test_requestAnimationFrame = getUrlParameter('raf'),
-        test_offset = parseInt(getUrlParameter('offset'), 10),
-        test_range = parseInt(getUrlParameter('range'), 10);
+        test_requestAnimationFrame = getUrlParameter('raf');
     var test_generateContent1 = function(div, levels) {
         for (var i = 0; i < levels[0]; i++) {
             var child = document.createElement('div');
@@ -59,12 +58,6 @@ requirejs(['scroll', 'hide', 'domini', 'domock'], function(Scroll, Hide, Domini,
         acceleration: 5000,
         raf: !!test_requestAnimationFrame,
         scrollBarMode: 1,
-        callback: function(elem, record) {
-            if(test_choice === 'true') Hide.update(-record.endPosition, record.scrollDir);
-        }
-    });
-    if(test_choice === 'true') Hide.init(test_targetDom, {
-        offset: test_offset,
-        range: test_range
+        plugins: test_choice ? [Hide] : []
     });
 });
