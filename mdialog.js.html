@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <!-- iOS私有属性 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓 -->
+    <meta name="HandheldFriendly" content="true">
+    <!-- 微软的老式浏览器 -->
+    <meta name="MobileOptimized" content="320">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <title>Dialog Demo</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            /*text-align: center;*/
+        }
+        * { background-color: #688; }
+        * * { background-color: #799; }
+        * * * { background-color: #8aa; }
+        * * * * { background-color: #9bb; }
+        * * * * * { background-color: #acc; }
+        * * * * * * { background-color: #bdd; }
+        * * * * * * * { background-color: #cee; }
+        * * * * * * * * { background-color: #dff; }
+
+        .btns {
+            font-size: 0;
+        }
+        button {
+            margin: 4px;
+            padding: 4px;
+        }
+        .blocks > div {
+            height: 400px;
+            border-top: 1px solid #eee;
+        }
+
+        .test {
+            background-color: #ddd;
+        }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="./dist/mdialog.min.css">
+    <script type="text/javascript" src="./dist/mdialog.min.js"></script>
+</head>
+
+<body>
+    <div class="btns">
+        <button id="btn0">1. 全屏</button>
+        <button id="btn1">2. 左上</button>
+        <button id="btn2">3. 中上</button>
+        <button id="btn3">4. 右上</button>
+        <button id="btn4">5. 左中</button>
+        <button id="btn5">6. 中</button>
+        <button id="btn6">7. 右中</button>
+        <button id="btn7">8. 左下</button>
+        <button id="btn8">9. 中下</button>
+        <button id="btn9">10. 右下</button>
+        <button id="btn10">11. 阻塞</button>
+        <button id="btn11">12. 中间带</button>
+        <button id="btn12">13. 中间坠落（常驻）</button>
+        <button id="btn13">14. 移动端不定尺寸对话框1</button>
+        <button id="btn14">15. 移动端不定尺寸对话框2（常驻）</button>
+    </div>
+
+    <!-- 以下元素为占位 -->
+    <div class="blocks">
+        <div></div>
+        <div style="width:800px"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <script type="text/javascript" src="./demo.js"></script>
+</body>
+
+</html>
